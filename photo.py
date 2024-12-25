@@ -30,8 +30,15 @@ if not os.path.exists('cats'):
 count = 0
 for url,download_count,id in cats:
     count += 1
-    print('downloading',count,url)
     filename = f'{download_count}_{id}.jpg' #str(download_count)+'_'+ id + '.jpg'
+    filepath = os.path.join('cats',filename)
+
+    if os.path.exists(filepath):
+        print('Skipping,file already exists:',filepath)
+        continue
+
+    print('downloading',count,url)
     response = requests.get(url)
-    with open(os.path.join('cats',filename),'wb') as f:
+    with open(filepath,'wb') as f:
         f.write(response.content)
+
